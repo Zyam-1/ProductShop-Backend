@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const {productModel} = require("../../models/product");
 const validate = require("../../middlewares/validateProd");
+const auth = require("../../middlewares/auth");
+const admin = require("../../middlewares/admin");
+
 
 router.get("/", async (req, res)=>{
     let page = parseInt(req.query.page ? req.query.page : 1);
@@ -13,7 +16,7 @@ router.get("/", async (req, res)=>{
 });
 
 
-router.delete("/:id", async(req, res)=>{
+router.delete("/:id", auth, admin, async(req, res)=>{
     var id = req.params.id;
     if(id){
         let deletedProduct = await productModel.findByIdAndDelete(id);
@@ -21,7 +24,7 @@ router.delete("/:id", async(req, res)=>{
     }
 });
 
-router.post("/", validate, async (req, res)=>{
+router.post("/", auth,  validate, async (req, res)=>{
     let newProd = new productModel;
     newProd.name = req.body.name;
     newProd.price = req.body.price;

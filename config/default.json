@@ -1,3 +1,4 @@
 {
-    "db": "mongodb://localhost:27017/ExpressPugCrud"
+    "db": "mongodb://localhost:27017/ExpressPugCrud",
+    "jwtKey": "somePrivateKey"
 }
